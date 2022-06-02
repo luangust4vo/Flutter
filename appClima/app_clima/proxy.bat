@@ -1,0 +1,3 @@
+set HTTP_PROXY=http://aluno:aluno@172.30.1.1:3128
+set FTP_PROXY=%HTTP_PROXY%
+set HTTPS_PROXY=%HTTP_PROXY%
