@@ -12,12 +12,12 @@ class Network {
 
   Future<Map<dynamic, dynamic>?> makeRequest() async {
     var requisicao = await Dio().get(url);
-    
+
     //se o status da requisição for igual a 200(sucesso)
     if (requisicao.statusCode == 200) {
       //... então será retornado os dados da requisição
       return requisicao.data;
-    } 
+    }
     //se o status não for igual a 200(sucesso)
     else {
       //... então será retornado o erro

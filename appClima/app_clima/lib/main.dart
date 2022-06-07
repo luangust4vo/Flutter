@@ -2,11 +2,11 @@
 
 //import 'dart:io';
 //import 'package:http_proxy/http_proxy.dart';
+import 'package:app_clima/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'services/localizacao.dart';
-import 'services/network.dart';
 
 void main() async {
+  //Comandos para conexão do proxy(ou algo assim)
   /* WidgetsFlutterBinding.ensureInitialized();
   HttpProxy httpProxy = await HttpProxy.createHttpProxy();
   httpProxy.host = "http://aluno:aluno@172.30.1.1";
@@ -20,32 +20,6 @@ class Clima extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Home());
-  }
-}
-
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
-
-  void testarPosicao() async {
-    var localizacao = Localizacao();
-    await localizacao.getLocalizacao();
-
-    print(localizacao.latitude);
-    print(localizacao.longitude);
-
-    var requisicao =
-        await Network("https://viacep.com.br/ws/01001000/json/").makeRequest();
-    print(requisicao);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    testarPosicao();
-    return Scaffold(
-      body: Center(
-        child: Container(),
-      ),
-    );
+    return MaterialApp(theme: ThemeData.dark(), home: Home());
   }
 }

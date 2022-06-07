@@ -1,7 +1,7 @@
 class API {
-  static const String apiKey = "f2c3a9d799dda8f71c551a3834698aeb";
+  static const String key = "f2c3a9d799dda8f71c551a3834698aeb";
   static const String apiUrl =
-      "https://api.openweathermap.org/data/2.5/weather";
+      "https://api.openweathermap.org/data/2.5/weather?";
 
   int temperatura;
   int condicao;
