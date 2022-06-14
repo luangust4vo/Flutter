@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:app_gifs/entity/gif.dart';
+import 'package:app_gifs/services/banco.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,20 +23,37 @@ class _VerGifState extends State<VerGif> {
       appBar: AppBar(
         actions: [
           IconButton(
-            // ignore: prefer_const_constructors
-            icon: Icon(Icons.copy),
-            onPressed: () =>
-                Clipboard.setData(ClipboardData(text: widget.gif.url)),
-          ),
+              icon: Icon(Icons.copy),
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: widget.gif.url));
+                ScaffoldMessenger.of(context).showSnackBar(
+                    /* SnackBar usado para informar ao usuário o processo que foi 
+                  realizado/executado */
+                    SnackBar(
+                  content: Text("Link copiado para área de transferência"),
+                  duration: Duration(seconds: 1),
+                ));
+              }),
           IconButton(
-            // ignore: prefer_const_constructors
             icon: Icon(Icons.favorite_outline),
-            onPressed: () => null,
+            onPressed: () => Banco.salvar(widget.gif),
           ),
         ],
       ),
       body: Center(
-        child: Image.network(widget.gif.url),
+        child: Image.network(
+          widget.gif.url,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) {
+              return child;
+            } else {
+              return CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 3,
+              );
+            }
+          },
+        ),
       ),
     );
   }

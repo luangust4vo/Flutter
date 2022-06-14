@@ -6,10 +6,11 @@ const String apiKey = "LIVDSRZULELA";
 
 //classe responsável por retornar uma lista de gifs dados pela API
 class Gif {
+  int? id;
   String url;
   String previewUrl;
 
-  Gif({required this.url, required this.previewUrl});
+  Gif({this.id, required this.url, required this.previewUrl});
 
   static Gif fromJson(Map<String, dynamic> json) {
     return Gif(
@@ -17,10 +18,18 @@ class Gif {
         previewUrl: json["media"][0]["nanogif"]["url"]);
   }
 
-  static Future<List<Gif>> getGifs({String busca = ""}) async {
+  static Gif fromDatabase(Map<String, dynamic> json) {
+    return Gif(id: json["id"], url: json["url"], previewUrl: json["preview"]);
+  }
+
+  static Future<List<Gif>> getGifs({int pagina = 0, String busca = ""}) async {
     var gifs = <Gif>[];
 
     var url = "$apiUrl/search?q=$busca&key=$apiKey&limit=12";
+
+    if (busca != "") {
+      url += "&pos=${pagina * 12}";
+    }
 
     var json = await Network(url).makeRequest();
 

@@ -13,6 +13,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String busca = "";
+  int contadorDePagina = 0;
+
+  void proximaPagina() {
+    setState(() {
+      contadorDePagina++;
+    });
+  }
+
+  void resetarPagina() {
+    setState(() {
+      contadorDePagina = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,9 +37,10 @@ class _HomeState extends State<Home> {
           children: [
             //TextField cria uma área para que se digite textos
             TextField(
+              onChanged: (value) => busca = value,
               //InputDecoration é o widget que permite a decoração do TextField
               decoration: InputDecoration(
-                  //OutineinputBorder cria uma borda sobre em volta de uma área
+                  //OutlineinputBorder cria uma borda em volta de uma área
                   border: OutlineInputBorder(),
                   label: Text(
                     "Pesquisar GIFs",
@@ -32,11 +48,11 @@ class _HomeState extends State<Home> {
                   ),
                   suffixIcon: IconButton(
                     icon: Icon(Icons.search),
-                    onPressed: () => null,
+                    onPressed: () => setState(() {}),
                   )),
             ),
             FutureBuilder(
-              future: Gif.getGifs(),
+              future: Gif.getGifs(pagina: contadorDePagina, busca: busca),
               builder: (context, snapshot) {
                 //condição que verifica se a requisição foi finalizada
                 if (snapshot.connectionState == ConnectionState.done) {
@@ -45,13 +61,19 @@ class _HomeState extends State<Home> {
 
                   return Expanded(
                     child: GridView.builder(
-                      itemCount: gifs.length,
+                      itemCount: gifs.length + 1,
                       gridDelegate:
                           const SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
                         crossAxisSpacing: 1,
                       ),
                       itemBuilder: (context, index) {
+                        if (index == gifs.length) {
+                          return ElevatedButton(
+                            onPressed: proximaPagina,
+                            child: Text("Carregar mais"),
+                          );
+                        }
                         return Card(
                           child: InkWell(
                             onTap: () {
@@ -79,7 +101,7 @@ class _HomeState extends State<Home> {
                   );
                 }
               },
-            )
+            ),
           ],
         ),
       ),
