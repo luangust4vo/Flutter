@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app_listas/view/cadastrar.dart';
 import 'package:app_listas/view/lista.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.blue,
       ),
       home: const Listas(),
     );
@@ -28,7 +29,9 @@ class Listas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: "App de Listas", routes: {"/": (context) => Home()});
+    return MaterialApp(title: "App de Listas", routes: {
+      "/": (context) => Home(),
+      "cadastrar": (context) => Cadastrar()
+    });
   }
 }

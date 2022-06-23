@@ -50,24 +50,25 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Row(
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      Hero(
-                        tag: "logo",
-                        child: Image.asset(
-                          "assets/logo.png",
-                          height: 100,
+                  Flexible(
+                    child: Row(
+                      // ignore: prefer_const_literals_to_create_immutables
+                      children: [
+                        Hero(
+                          tag: "logo",
+                          child: Image.asset(
+                            "assets/logo.png",
+                            height: 100,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "Flash Chat",
-                        style: TextStyle(
-                            fontSize: 45, fontWeight: FontWeight.bold),
-                      )
-                    ],
+                        Text(
+                          "Flash Chat",
+                          style: TextStyle(
+                              fontSize: 45, fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 40),
                   RoundedTextField(
                     placeholder: "Digite seu e-mail",
                     onChanged: (value) => null,

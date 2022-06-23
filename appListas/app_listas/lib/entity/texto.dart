@@ -1,10 +1,10 @@
 class Texto {
-  int id;
+  int? id;
   String conteudo;
 
-  Texto(this.id, this.conteudo);
+  Texto({this.id, required this.conteudo});
 
   static Texto fromDataBase(Map<String, dynamic> json) {
-    return Texto(json['id'], json['conteudo']);
+    return Texto(id: json['id'], conteudo: json['conteudo']);
   }
 }
