@@ -2,6 +2,7 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flash_chat/screens/cadastro.dart';
+import 'package:flash_chat/screens/chat.dart';
 import 'package:flash_chat/screens/home.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,8 @@ class FlashChat extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(initialRoute: "home", routes: {
       "home": (context) => Home(),
-      "cadastro": (context) => Cadastro()
+      "cadastro": (context) => Cadastro(),
+      "chat": (context) => Chat()
     });
   }
 }

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/widgets/rounded_button.dart';
 import 'package:flash_chat/widgets/rounded_text_field.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
+  String email = "";
+  String senha = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,19 +75,33 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ),
                   RoundedTextField(
                     placeholder: "Digite seu e-mail",
-                    onChanged: (value) => null,
+                    onChanged: (value) => email = value,
                   ),
                   SizedBox(height: 16),
                   RoundedTextField(
                     placeholder: "Digite sua senha",
-                    onChanged: (value) => null,
+                    onChanged: (value) => senha = value,
                     hideText: true,
                   ),
                   SizedBox(height: 20),
                   RoundedButton(
                     text: "Login",
                     color: Colors.lightBlue,
-                    onPressed: () => null,
+                    onPressed: () async {
+                      try {
+                        var resultado = await FirebaseAuth.instance
+                            .signInWithEmailAndPassword(
+                                email: email, password: senha);
+
+                        if (resultado.user != null) {
+                          Navigator.of(context).pushNamed("chat");
+                        }
+                      } catch (erro) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(erro.toString()),
+                        ));
+                      }
+                    },
                   ),
                   RoundedButton(
                     text: "Cadastrar-se",

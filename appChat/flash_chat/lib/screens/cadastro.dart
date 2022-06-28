@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/widgets/rounded_button.dart';
 import 'package:flash_chat/widgets/rounded_text_field.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,9 @@ class Cadastro extends StatefulWidget {
 }
 
 class _CadastroState extends State<Cadastro> {
+  String email = "";
+  String senha = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,19 +39,33 @@ class _CadastroState extends State<Cadastro> {
               SizedBox(height: 40),
               RoundedTextField(
                 placeholder: "Digite seu e-mail",
-                onChanged: (value) => null,
+                onChanged: (value) => email = value,
               ),
               SizedBox(height: 16),
               RoundedTextField(
                 placeholder: "Digite sua senha",
-                onChanged: (value) => null,
+                onChanged: (value) => senha = value,
                 hideText: true,
               ),
               SizedBox(height: 40),
               RoundedButton(
                 text: "Cadastrar-se",
                 color: Colors.blue.shade600,
-                onPressed: () => null,
+                onPressed: () async {
+                  var resultado = await FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                          email: email, password: senha);
+
+                  try {
+                    if (resultado.user != null) {
+                      Navigator.of(context).pushNamed("chat");
+                    }
+                  } catch (erro) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(erro.toString()),
+                    ));
+                  }
+                },
               ),
             ],
           ),
